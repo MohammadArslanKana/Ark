@@ -8,6 +8,7 @@ import base64
 
 def main():
     while True:
+        print("\nPlease choose an image with a larger pixel value")
         print("\nChoose option to perform")
         print("1. Encrypt data to stego image")
         print("2. Decrypt data from a stego image")
