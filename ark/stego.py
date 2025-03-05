@@ -38,7 +38,9 @@ def main():
             elif secret_key_choice==2:
                 secret_key=generate_random_key()
                 print("Your secret key is: ", secret_key)
-                 
+            else:
+                print("Please enter a valid choice")
+                exit()
             Encrypt_stego_image(image , secret_key)#encodes the image with our data and encrypts the string of locations where its stored
             
         elif choice==2:
@@ -64,7 +66,7 @@ def Encrypt_stego_image(image, secret_key):
         image[random_row, random_col, bgr] = asc[message[i]]
         # stores the row and col value of that pixel as a tupple in list key
         location.append((random_row, random_col))
-        bgr = (bgr + 1) % 3  # selects which value to encode next
+        bgr = (bgr + 1) % 3  # selects which value to encode next ie 0 , 1 , 2
 
     # print("location: ",location) # debugging line
 
@@ -73,9 +75,9 @@ def Encrypt_stego_image(image, secret_key):
     #print("key string: ", location_string) #debugging line to check tuple conversion to string is happening
     #print(len(location_string))  # length includes individual elements and spaces as in string all of them are considered as elements
 
-    location_string_cipher = encrypt_message(location_string, secret_key)  # used to encrypt the string of location 
+    location_string_cipher = encrypt_message(location_string, secret_key)  # used for AES encryption to encrypt the string of location 
 
-    print("Your Encrypted Location Cipher Text: ", location_string_cipher)
+    print("Your Encrypted Location Cipher Text: ", location_string_cipher) #gives the encrypted location of data.
     #print(len(location_string_cipher)) Debugging line
     
     
@@ -92,7 +94,7 @@ def pad(text):
 def encrypt_message(message, secret_key):
     """Encrypts a message using AES encryption."""
     key = secret_key.ljust(16)[:16].encode("utf-8")  # Ensure 16-byte key
-    iv = get_random_bytes(16) #this ensures that if the same cipher is encrypted again it has some randomness to prevent steganalysis
+    iv = get_random_bytes(16) #this ensures that if the same cipher is encrypted again, it has some randomness to prevent steganalysis
     cipher = AES.new(key, AES.MODE_CBC, iv)
     encrypted_bytes = cipher.encrypt(pad(message).encode("utf-8"))
     return base64.b64encode(iv + encrypted_bytes).decode("utf-8")
@@ -113,7 +115,7 @@ def save_data(image, secret_key, ciphertext):
     choice = input("Would You like to save the encryption in same directory? (y/n): ").strip().lower()
     
     if choice == "y":
-        save_dir = os.getcwd()  # idar hi save krty hain 
+        save_dir = os.getcwd()  # saves in same directory
     else:
         location_dir = input("Enter the location/path where you want to save the files: ").strip()
         save_dir = os.path.join(location_dir, "stego_data")#creates a folder to store data at custom location
@@ -145,7 +147,7 @@ def Decrypt_stego_image(image, secret_key):
     
     rows = []
     cols = []
-    for row, col in tuple_list:
+    for row, col in tuple_list: #tuples list is converted to rows and cols list seperately
         rows.append(row)
         cols.append(col)
         
