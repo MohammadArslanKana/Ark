@@ -14,8 +14,9 @@
 - Supports custom or randomly generated encryption keys.
 
 ### 💣 NukeDisk — Secure Disk Wiper
--  A powerful Bash script that **permanently wipes all data** from a disk.
--  Ideal for securely erasing hard drives, USBs or NVME before disposal or reuse.
+- A powerful Bash script that **permanently wipes all data** from a disk.
+- Ideal for securely erasing hard drives, USBs or NVME before disposal or reuse.
+- You can either leave the disk as it is or format it for further usage. 
 
 ## Installation 💻
 Using this might need some extra work like using break system packages.
